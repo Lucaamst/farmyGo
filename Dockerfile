@@ -1,4 +1,3 @@
-backend/
 ├── Dockerfile
 ├── package.json
 ├── package-lock.json
