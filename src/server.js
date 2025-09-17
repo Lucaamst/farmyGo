@@ -1,23 +1,29 @@
-import app from './app.js';
-import { sequelize } from './models/index.js';
+import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
+import db from './models/index.js';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-async function startServer() {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Database connesso con successo');
+// Test endpoint
+app.get('/', (req, res) => {
+  res.send('Backend consegne funzionante!');
+});
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Server avviato su http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('❌ Errore di connessione al database:', error);
-    process.exit(1);
-  }
+// Modelli caricati
+try {
+  console.log("Modelli caricati:", db);
+} catch (err) {
+  console.error("Errore caricamento modelli:", err);
 }
 
-startServer();
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server avviato sulla porta ${PORT}`);
+});
+
+export default app;
