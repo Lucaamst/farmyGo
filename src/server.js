@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import db from './models/index.js';
+import sequelize from './models/index.js';
 
 dotenv.config();
 
@@ -14,17 +14,15 @@ app.get('/', (req, res) => {
   res.send('Backend consegne funzionante!');
 });
 
-// Modelli caricati
-try {
-  console.log("Modelli caricati:", db);
-} catch (err) {
-  console.error("Errore caricamento modelli:", err);
-}
+// Sincronizza il DB (crea le tabelle dai modelli)
+sequelize.sync({ alter: true }).then(() => {
+  console.log("📦 Database sincronizzato");
+});
 
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
-  console.log(`Server avviato sulla porta ${PORT}`);
+  console.log(`🚀 Server avviato sulla porta ${PORT}`);
 });
 
 export default app;
