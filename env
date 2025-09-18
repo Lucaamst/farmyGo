@@ -1,0 +1,6 @@
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=consegne_db
+DB_USER=tuo_utente
+DB_PASSWORD=la_tua_password
+PORT=4000
